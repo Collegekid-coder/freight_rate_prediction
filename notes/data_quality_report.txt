@@ -1,0 +1,254 @@
+﻿
+================================================================================
+1. DUPLICATES AND IMPOSSIBLE ROWS
+================================================================================
+duplicate load_id (train): 0
+duplicate rows ignoring load_id (train): 0
+pickup == delivery (train / validation): 0 / 0
+posted_rate <= 0 (train): 0
+distance <= 0 (train / validation): 0 / 0
+
+================================================================================
+2. WEIGHT
+================================================================================
+train: rows=48000 missing=300 negative=292 zero=0 tiny(0<w<1000)=0 min=-47500.0 max=47500.0
+validation: rows=12000 missing=165 negative=145 zero=0 tiny(0<w<1000)=0 min=-47500.0 max=47500.0
+
+abs(negative weights) summary:
+count      292.0
+mean     31724.2
+std       8262.5
+min       5000.0
+25%      25928.5
+50%      31821.5
+75%      37284.2
+max      47500.0
+
+positive weights summary:
+count    47408.0
+mean     31415.4
+std       7994.9
+min       5000.0
+25%      25922.0
+50%      31493.5
+75%      37063.0
+max      47500.0
+
+================================================================================
+3. MISSING VALUES: RANDOM OR PATTERNED?
+================================================================================
+
+weight: share missing by month (train)
+date
+2025-01    0.0069
+2025-02    0.0076
+2025-03    0.0071
+2025-04    0.0042
+2025-05    0.0045
+2025-06    0.0067
+2025-07    0.0059
+2025-08    0.0061
+2025-09    0.0071
+2025-10    0.0066
+Freq: M
+weight: share missing by equipment (train)
+equipment
+Dry Van    0.0064
+Flatbed    0.0063
+Reefer     0.0058
+weight: share missing, train vs validation: 0.0062 vs 0.0138
+
+market_index: share missing by month (train)
+date
+2025-01    0.0073
+2025-02    0.0083
+2025-03    0.0087
+2025-04    0.0064
+2025-05    0.0088
+2025-06    0.0088
+2025-07    0.0073
+2025-08    0.0069
+2025-09    0.0066
+2025-10    0.0087
+Freq: M
+market_index: share missing by equipment (train)
+equipment
+Dry Van    0.0074
+Flatbed    0.0083
+Reefer     0.0082
+market_index: share missing, train vs validation: 0.0078 vs 0.0208
+
+================================================================================
+4. MARKET_INDEX: DAILY LEVEL OR PER-LOAD?
+================================================================================
+average spread of market_index within one day: 0.0249
+spread of the daily averages across days:     0.1665
+(if 'within' is much smaller than 'between', a blank can be filled from the same day)
+
+================================================================================
+5. TARGET: posted_rate AND rate_per_mile
+================================================================================
+count    48000.00
+mean      2373.98
+std       1486.49
+min         57.22
+0.1%       200.31
+1%         327.17
+5%         599.74
+50%       2030.76
+95%       4953.77
+99%       5972.83
+99.9%    12854.56
+max      25533.00
+
+count    48000.000
+mean         2.215
+std          0.584
+min          0.334
+0.1%         0.437
+1%           1.674
+5%           1.808
+50%          2.145
+95%          2.736
+99%          3.177
+99.9%       10.069
+max         14.125
+
+10 highest rate_per_mile:
+         load_id        pickup     delivery  distance equipment   weight       date  quote_signal  posted_rate  rate_per_mile
+22254  TR-022255    Greensboro   Cincinnati     314.7    Reefer -36485.0 2025-05-21       1.24215      4445.23      14.125294
+36609  TR-036610   Chattanooga      Atlanta      98.4    Reefer  22226.0 2025-08-20       2.58457      1386.42      14.089634
+870    TR-000871         Tulsa  Baton Rouge     305.6    Reefer  26447.0 2025-01-06       2.64181      4069.24      13.315576
+17070  TR-017071        Toledo       Dayton     201.5   Flatbed  38714.0 2025-04-18       1.44259      2609.34      12.949578
+27969  TR-027970       Buffalo       Boston     589.9    Reefer  24951.0 2025-06-25       2.58804      7597.52      12.879335
+23369  TR-023370      Amarillo      Lubbock     412.4   Flatbed  35494.0 2025-05-28       1.40576      5308.96      12.873327
+28012  TR-028013    Montgomery      Houston     604.3    Reefer  39690.0 2025-06-25       2.76111      7773.37      12.863429
+45483  TR-045484    Greensboro     Columbia     153.8   Dry Van  34198.0 2025-10-15       1.46388      1971.21      12.816710
+1415   TR-001416    Montgomery   Birmingham     198.2    Reefer  25383.0 2025-01-09       2.66449      2509.96      12.663774
+21968  TR-021969  Jacksonville     Columbia     254.5   Dry Van  32993.0 2025-05-19       1.52868      3220.66      12.654853
+
+10 lowest rate_per_mile:
+         load_id          pickup      delivery  distance equipment   weight       date  quote_signal  posted_rate  rate_per_mile
+14102  TR-014103         Buffalo   Bakersfield    2536.4   Dry Van  27044.0 2025-03-30       1.77264       846.42       0.333709
+25798  TR-025799          Albany          Reno    2894.3   Dry Van  32383.0 2025-06-12       1.87999       969.83       0.335083
+23043  TR-023044         Phoenix  Philadelphia    2983.4   Dry Van  37692.0 2025-05-26       2.31695      1047.91       0.351247
+46173  TR-046174    Philadelphia       El Paso    2490.9   Dry Van  22411.0 2025-10-20       2.40555       880.13       0.353338
+508    TR-000509       Las Vegas  Grand Rapids    1976.4   Flatbed  28233.0 2025-01-04       1.82202       699.41       0.353881
+2511   TR-002512         Buffalo   San Antonio    1644.3   Flatbed  22022.0 2025-01-16       1.87307       596.04       0.362489
+40600  TR-040601      Fort Wayne       Phoenix    2210.6   Dry Van  24954.0 2025-09-14       1.72726       808.74       0.365846
+22458  TR-022459  Salt Lake City        Mobile    1632.3   Dry Van -32048.0 2025-05-22       2.10748       599.77       0.367439
+22464  TR-022465     Kansas City   Los Angeles    1909.1   Dry Van  32899.0 2025-05-22       2.09782       709.46       0.371620
+1555   TR-001556         El Paso      New York    2415.0   Dry Van  39284.0 2025-01-10       1.83237       911.44       0.377408
+
+rate_per_mile by equipment:
+           count   mean  median
+equipment                      
+Dry Van    27202  2.115   2.046
+Flatbed     8753  2.295   2.220
+Reefer     12045  2.383   2.312
+
+================================================================================
+6. QUOTE_SIGNAL AS A PREDICTOR (the naive baseline)
+================================================================================
+corr(quote_signal * distance, posted_rate): 0.8987
+ratio actual rate_per_mile / quote_signal:
+count    48000.0000
+mean         1.0996
+std          0.3728
+min          0.1469
+1%           0.7324
+5%           0.8475
+50%          1.0040
+95%          1.6127
+99%          2.5462
+max         11.3716
+naive baseline MAE:  232.26
+naive baseline MAPE: 11.37%
+naive baseline RMSE: 674.57
+
+================================================================================
+7. DISTANCE VS COORDINATES
+================================================================================
+
+train: distance / straight-line miles
+count    48000.000
+mean         1.195
+std          0.144
+min          1.058
+1%           1.130
+50%          1.182
+99%          1.404
+max          9.635
+
+validation: distance / straight-line miles
+count    12000.000
+mean         1.218
+std          1.243
+min          1.099
+1%           1.128
+50%          1.182
+99%          1.414
+max         78.500
+
+================================================================================
+8. CITIES, COORDINATES, DECEMBER LANE
+================================================================================
+cities: 64 | cities with more than one coordinate pair: 0
+pickup values in validation but never in train: ['Allentown', 'Charlotte', 'Chicago', 'Jackson', 'Knoxville', 'Laredo', 'Norfolk', 'San Diego']
+delivery values in validation but never in train: ['Allentown', 'Charlotte', 'Chicago', 'Jackson', 'Knoxville', 'Laredo', 'Norfolk', 'San Diego']
+equipment values in validation but never in train: []
+Lexington: seen 2406 times in train; coordinates: [[36.99152, -84.99876]]
+Fort Wayne: seen 2346 times in train; coordinates: [[41.31561, -85.36206]]
+Lexington -> Fort Wayne loads in train: 32
+count     32.0
+mean     363.7
+std        8.9
+min      346.3
+25%      358.2
+50%      362.3
+75%      368.2
+max      384.5
+
+================================================================================
+9. DRIFT OVER TIME
+================================================================================
+TRAIN by month
+         loads  market_index  quote_signal  rate_per_mile  distance
+date                                                               
+2025-01   4918         0.927         2.068          2.100  1139.564
+2025-02   4337         0.996         2.097          2.123  1136.794
+2025-03   5036         1.073         2.180          2.206  1142.752
+2025-04   4819         1.208         1.963          2.210  1137.309
+2025-05   4913         1.301         1.913          2.260  1135.907
+2025-06   4783         1.280         2.296          2.332  1132.970
+2025-07   4912         1.201         1.923          2.256  1130.508
+2025-08   4759         0.981         2.052          2.189  1132.002
+2025-09   4670         0.893         2.200          2.230  1144.869
+2025-10   4853         0.958         1.943          2.240  1125.979
+
+VALIDATION by month
+         loads  market_index  quote_signal  distance
+date                                                
+2025-11   5836         0.919         2.055  1144.232
+2025-12   6164         0.935         2.048  1139.445
+
+TRAIN mean rate_per_mile by day of week
+date
+Friday       2.215
+Monday       2.196
+Saturday     2.196
+Sunday       2.192
+Thursday     2.245
+Tuesday      2.213
+Wednesday    2.248
+
+VALIDATION numeric ranges
+        distance     weight  market_index  quote_signal
+count  12000.000  11835.000     11751.000     12000.000
+mean    1141.773  30506.636         0.927         2.051
+std      732.334  10572.590         0.074         0.220
+min       70.000 -47500.000         0.724         1.235
+25%      556.100  25493.000         0.864         1.903
+50%      953.600  31193.000         0.923         2.051
+75%     1670.500  36843.500         0.992         2.200
+max     3325.700  47500.000         1.099         2.896
